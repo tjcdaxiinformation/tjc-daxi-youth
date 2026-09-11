@@ -19,7 +19,7 @@
   <style>
     body {
       font-family: 'Noto Sans TC', sans-serif;
-      user-select: none; /* 適合觸控螢幕 */
+      user-select: none; /* 適合觸控電子白板 */
       -webkit-user-select: none;
       touch-action: manipulation;
     }
@@ -42,17 +42,28 @@
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.05); }
     }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.3s ease-out forwards;
+    }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen">
+<body class="bg-slate-950 text-slate-100 min-h-screen selection:bg-cyan-500 selection:text-slate-950">
   <div id="root"></div>
 
   <script type="text/babel">
     const { useState, useEffect, useRef } = React;
 
+    // 音效產生器 (Web Audio API)
     const playSound = (type) => {
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.connect(gain);
@@ -113,13 +124,13 @@
           });
         }
       } catch (e) {
-        console.log("Audio play blocked or unavailable");
+        console.log("Audio API not allowed or restricted");
       }
     };
 
     const courseData = {
       title: "科學家（無神論者）與基督徒的PK賽",
-      target: "國中初級班 / 4人小組討論",
+      target: "國中初級班 / 4人小組討論（黃恩、牧霖、采恩、黃昕）",
       verse: "「深哉，神豐富的智慧和知識！他的判斷何其難測！他的蹤跡何其難尋！」（羅馬書 11:33）",
       
       topics: [
@@ -240,7 +251,7 @@
           options: [
             "憤怒咆哮，大聲跟他們罵到底",
             "心懷憐憫，用溫柔謙卑的心溝通，並為他們禱告",
-            "立刻斷絕友情，再也不理對方",
+            "一點都不再理對方，拉黑刪除好友",
             "順從對方的想法，放棄自己的信仰"
           ],
           correct: 1,
@@ -262,67 +273,67 @@
       const [showWheelModal, setShowWheelModal] = useState(false);
 
       return (
-        <div class="min-h-screen gradient-bg flex flex-col justify-between">
-          {/* Header */}
-          <header class="bg-slate-900/80 backdrop-blur border-b border-slate-800 p-4 sticky top-0 z-50">
-            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-              <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center text-white text-2xl font-black shadow-lg glow-cyan">
-                  <i class="fa-solid fa-atom"></i>
+        <div className="min-h-screen gradient-bg flex flex-col justify-between">
+          {/* Header Bar */}
+          <header className="bg-slate-900/90 backdrop-blur border-b border-slate-800 p-4 sticky top-0 z-50 shadow-xl">
+            <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center text-white text-2xl font-black shadow-lg glow-cyan">
+                  <i className="fa-solid fa-atom"></i>
                 </div>
                 <div>
-                  <h1 class="text-xl md:text-2xl font-black tracking-tight bg-gradient-to-r from-cyan-400 via-indigo-300 to-amber-300 bg-clip-text text-transparent">
+                  <h1 className="text-xl md:text-2xl font-black tracking-tight bg-gradient-to-r from-cyan-400 via-indigo-300 to-amber-300 bg-clip-text text-transparent">
                     {courseData.title}
                   </h1>
-                  <p class="text-xs text-slate-400 flex items-center gap-2">
-                    <span class="bg-indigo-950 text-indigo-300 px-2 py-0.5 rounded border border-indigo-800">{courseData.target}</span>
+                  <p className="text-xs text-slate-400 flex items-center gap-2 mt-0.5">
+                    <span className="bg-indigo-950 text-indigo-300 px-2 py-0.5 rounded border border-indigo-800 font-bold">國中班小組</span>
                     <span>成員：黃恩、牧霖、采恩、黃昕</span>
                   </p>
                 </div>
               </div>
 
-              {/* Navigation Modes */}
-              <div class="flex flex-wrap items-center gap-2">
+              {/* Navigation Actions */}
+              <div className="flex flex-wrap items-center gap-2">
                 <button
                   onClick={() => { playSound('click'); setShowWheelModal(true); }}
-                  class="px-4 py-2.5 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-bold rounded-xl shadow-lg flex items-center gap-2 text-sm transition transform active:scale-95 glow-purple"
+                  className="px-4 py-2.5 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-bold rounded-xl shadow-lg flex items-center gap-2 text-sm transition transform active:scale-95 glow-purple"
                 >
-                  <i class="fa-solid fa-arrows-spin text-lg animate-spin" style={{ animationDuration: '6s' }}></i>
+                  <i className="fa-solid fa-arrows-spin text-lg animate-spin" style={{ animationDuration: '6s' }}></i>
                   <span>轉盤隨機分組</span>
                 </button>
 
-                <div class="flex bg-slate-950/80 p-1.5 rounded-2xl border border-slate-800 text-sm font-bold">
+                <div className="flex bg-slate-950/80 p-1.5 rounded-2xl border border-slate-800 text-sm font-bold">
                   <button
                     onClick={() => { playSound('click'); setActiveTab('discussion'); }}
-                    class={`px-5 py-2.5 rounded-xl transition flex items-center gap-2 ${activeTab === 'discussion' ? 'bg-cyan-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
+                    className={`px-4 md:px-5 py-2.5 rounded-xl transition flex items-center gap-2 ${activeTab === 'discussion' ? 'bg-cyan-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
                   >
-                    <i class="fa-solid fa-comments"></i> 1. 分組思辨庫
+                    <i className="fa-solid fa-comments"></i> 1. 分組思辨庫
                   </button>
                   <button
                     onClick={() => { playSound('click'); setActiveTab('game'); }}
-                    class={`px-5 py-2.5 rounded-xl transition flex items-center gap-2 ${activeTab === 'game' ? 'bg-amber-500 text-slate-950 font-black shadow-lg glow-amber' : 'text-slate-400 hover:text-white'}`}
+                    className={`px-4 md:px-5 py-2.5 rounded-xl transition flex items-center gap-2 ${activeTab === 'game' ? 'bg-amber-500 text-slate-950 font-black shadow-lg glow-amber' : 'text-slate-400 hover:text-white'}`}
                   >
-                    <i class="fa-solid fa-bolt-lightning"></i> 2. 白板搶答大戰
+                    <i className="fa-solid fa-bolt-lightning"></i> 2. 白板搶答大戰
                   </button>
                   <button
                     onClick={() => { playSound('click'); setActiveTab('summary'); }}
-                    class={`px-5 py-2.5 rounded-xl transition flex items-center gap-2 ${activeTab === 'summary' ? 'bg-purple-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
+                    className={`px-4 md:px-5 py-2.5 rounded-xl transition flex items-center gap-2 ${activeTab === 'summary' ? 'bg-purple-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
                   >
-                    <i class="fa-solid fa-book-open"></i> 3. 課後總結與禱告
+                    <i className="fa-solid fa-book-open"></i> 3. 課後總結與禱告
                   </button>
                 </div>
               </div>
             </div>
           </header>
 
-          {/* Main Content Area */}
-          <main class="max-w-7xl mx-auto w-full p-4 md:p-6 flex-1">
+          {/* Main Workspace Area */}
+          <main className="max-w-7xl mx-auto w-full p-4 md:p-6 flex-1">
             {activeTab === 'discussion' && <DiscussionBoard courseData={courseData} students={students} onOpenWheel={() => setShowWheelModal(true)} />}
             {activeTab === 'game' && <TouchQuizGame courseData={courseData} scores={scores} setScores={setScores} students={students} />}
             {activeTab === 'summary' && <TeacherSummary courseData={courseData} />}
           </main>
 
-          {/* Wheel Randomizer Modal */}
+          {/* Wheel Modal */}
           {showWheelModal && (
             <WheelModal 
               students={students} 
@@ -332,17 +343,15 @@
           )}
 
           {/* Footer */}
-          <footer class="bg-slate-950 border-t border-slate-900 py-3 px-4 text-center text-xs text-slate-500">
+          <footer className="bg-slate-950 border-t border-slate-900 py-3 px-4 text-center text-xs text-slate-500">
             真耶穌教會共習課教案數位化互動平台 | 羅馬書 11:33 深哉，神豐富的智慧和知識！
           </footer>
         </div>
       );
     }
 
-    /* 轉盤分組 Modal 元件 */
     function WheelModal({ students, setStudents, onClose }) {
       const [isSpinning, setIsSpinning] = useState(false);
-      const [rotation, setRotation] = useState(0);
       const [resultMessage, setResultMessage] = useState("");
       const canvasRef = useRef(null);
 
@@ -364,7 +373,7 @@
 
         ctx.clearRect(0, 0, width, height);
 
-        // Draw sectors
+        // Draw wheel slices
         names.forEach((name, i) => {
           const startAngle = currentAngle + i * sliceAngle;
           const endAngle = startAngle + sliceAngle;
@@ -379,20 +388,20 @@
           ctx.strokeStyle = "#0f172a";
           ctx.stroke();
 
-          // Draw Text
+          // Text labels
           ctx.save();
           ctx.translate(width / 2, height / 2);
           ctx.rotate(startAngle + sliceAngle / 2);
           ctx.textAlign = "right";
           ctx.fillStyle = "#ffffff";
           ctx.font = "bold 20px Noto Sans TC, sans-serif";
-          ctx.shadowColor = "rgba(0,0,0,0.5)";
+          ctx.shadowColor = "rgba(0,0,0,0.6)";
           ctx.shadowBlur = 4;
           ctx.fillText(name, radius - 20, 7);
           ctx.restore();
         });
 
-        // Center Knob
+        // Center hub
         ctx.beginPath();
         ctx.arc(width / 2, height / 2, 28, 0, 2 * Math.PI);
         ctx.fillStyle = "#0f172a";
@@ -413,14 +422,13 @@
         setResultMessage("");
         playSound('click');
 
-        // Randomly shuffle array of students into 2 teams
         const shuffled = [...names].sort(() => Math.random() - 0.5);
         const scienceMembers = shuffled.slice(0, 2);
         const faithMembers = shuffled.slice(2, 4);
 
-        const totalRotations = 5 + Math.random() * 3; // 5-8 full spins
+        const totalRotations = 5 + Math.random() * 3;
         const finalAngle = totalRotations * 2 * Math.PI;
-        const duration = 3500; // 3.5s
+        const duration = 3500;
         const startTime = performance.now();
 
         let lastTickSegment = -1;
@@ -428,13 +436,11 @@
         const animate = (now) => {
           const elapsed = now - startTime;
           const progress = Math.min(elapsed / duration, 1);
-          // Ease out cubic
           const easeOut = 1 - Math.pow(1 - progress, 3);
           const currentAngle = easeOut * finalAngle;
 
           drawWheel(currentAngle);
 
-          // Audio tick on sector passage
           const sliceAngle = (2 * Math.PI) / names.length;
           const currentSegment = Math.floor((currentAngle % (2 * Math.PI)) / sliceAngle);
           if (currentSegment !== lastTickSegment) {
@@ -448,7 +454,6 @@
             setIsSpinning(false);
             playSound('fanfare');
 
-            // Update students state
             const updated = [
               { id: 1, name: scienceMembers[0], team: "science", role: "科學家組" },
               { id: 2, name: scienceMembers[1], team: "science", role: "科學家組" },
@@ -464,46 +469,41 @@
       };
 
       return (
-        <div class="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] flex items-center justify-center p-4">
-          <div class="bg-slate-900 border border-slate-700 rounded-3xl p-6 md:p-8 max-w-lg w-full text-center space-y-6 shadow-2xl relative animate-fadeIn">
-            {/* Close Button */}
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-slate-700 rounded-3xl p-6 md:p-8 max-w-lg w-full text-center space-y-6 shadow-2xl relative animate-fadeIn">
             <button 
               onClick={onClose}
-              class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition"
+              className="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition"
             >
-              <i class="fa-solid fa-xmark text-lg"></i>
+              <i className="fa-solid fa-xmark text-lg"></i>
             </button>
 
             <div>
-              <span class="text-xs font-bold uppercase tracking-widest text-amber-400">觸控幸運轉盤</span>
-              <h2 class="text-2xl font-black text-white mt-1">國中生隨機 PK 分組轉盤</h2>
-              <p class="text-xs text-slate-400 mt-1">成員：黃恩、牧霖、采恩、黃昕（自動平分為兩組）</p>
+              <span className="text-xs font-bold uppercase tracking-widest text-amber-400">觸控幸運轉盤</span>
+              <h2 className="text-2xl font-black text-white mt-1">國中生隨機 PK 分組轉盤</h2>
+              <p className="text-xs text-slate-400 mt-1">成員：黃恩、牧霖、采恩、黃昕（自動平分為兩組）</p>
             </div>
 
-            {/* Wheel Canvas Container */}
-            <div class="relative w-[280px] h-[280px] mx-auto flex items-center justify-center">
-              {/* Pointer Arrow */}
-              <div class="absolute -top-3 left-1/2 -translate-x-1/2 z-20 text-amber-400 text-3xl drop-shadow-md">
-                <i class="fa-solid fa-caret-down"></i>
+            <div className="relative w-[280px] h-[280px] mx-auto flex items-center justify-center">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 text-amber-400 text-3xl drop-shadow-md">
+                <i className="fa-solid fa-caret-down"></i>
               </div>
-              <canvas ref={canvasRef} width="280" height="280" class="rounded-full shadow-2xl border-4 border-slate-800"></canvas>
+              <canvas ref={canvasRef} width="280" height="280" className="rounded-full shadow-2xl border-4 border-slate-800"></canvas>
             </div>
 
-            {/* Result Message */}
             {resultMessage && (
-              <div class="p-3 bg-indigo-950/80 border border-indigo-700/80 text-amber-300 rounded-xl text-sm font-bold animate-bounce">
+              <div className="p-3 bg-indigo-950/80 border border-indigo-700/80 text-amber-300 rounded-xl text-sm font-bold animate-fadeIn">
                 {resultMessage}
               </div>
             )}
 
-            {/* Action Buttons */}
-            <div class="flex gap-3 justify-center">
+            <div className="flex gap-3 justify-center">
               <button
                 onClick={spinWheel}
                 disabled={isSpinning}
-                class="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black text-lg rounded-2xl shadow-xl glow-amber transform active:scale-95 transition disabled:opacity-50 flex items-center gap-2"
+                className="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black text-lg rounded-2xl shadow-xl glow-amber transform active:scale-95 transition disabled:opacity-50 flex items-center gap-2"
               >
-                <i class={`fa-solid fa-arrows-spin ${isSpinning ? 'animate-spin' : ''}`}></i>
+                <i className={`fa-solid fa-arrows-spin ${isSpinning ? 'animate-spin' : ''}`}></i>
                 {isSpinning ? "旋轉分組中..." : "開始轉盤分組！"}
               </button>
             </div>
@@ -520,75 +520,75 @@
       const faithStudents = students.filter(s => s.team === 'faith');
 
       return (
-        <div class="space-y-6">
-          {/* Top Banner: 4 Students Group Status */}
-          <div class="bg-slate-900/90 rounded-2xl border border-slate-800 p-4 space-y-3">
-            <div class="flex justify-between items-center">
-              <span class="text-xs font-bold text-slate-400 flex items-center gap-2">
-                <i class="fa-solid fa-users text-indigo-400"></i> 當前小組成員分組狀態：
+        <div className="space-y-6">
+          {/* Top Banner: Student Group Status */}
+          <div className="bg-slate-900/90 rounded-2xl border border-slate-800 p-4 space-y-3 shadow-lg">
+            <div className="flex justify-between items-center">
+              <span className="text-xs font-bold text-slate-400 flex items-center gap-2">
+                <i className="fa-solid fa-users text-indigo-400"></i> 當前小組成員分組狀態：
               </span>
               <button 
                 onClick={onOpenWheel}
-                class="text-xs bg-indigo-950 hover:bg-indigo-900 text-indigo-300 border border-indigo-800 px-3 py-1 rounded-lg font-bold transition flex items-center gap-1.5"
+                className="text-xs bg-indigo-950 hover:bg-indigo-900 text-indigo-300 border border-indigo-800 px-3 py-1 rounded-lg font-bold transition flex items-center gap-1.5"
               >
-                <i class="fa-solid fa-arrows-spin"></i> 重抽轉盤分組
+                <i className="fa-solid fa-arrows-spin"></i> 重抽轉盤分組
               </button>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {students.map((s, idx) => (
                 <div 
                   key={s.id} 
-                  class={`p-3 rounded-xl border flex items-center gap-3 transition transform hover:scale-[1.02] ${
+                  className={`p-3 rounded-xl border flex items-center gap-3 transition transform hover:scale-[1.02] ${
                     s.team === 'science' 
                       ? 'bg-cyan-950/40 border-cyan-800/50 text-cyan-200' 
                       : 'bg-amber-950/40 border-amber-800/50 text-amber-200'
                   }`}
                 >
-                  <div class={`w-9 h-9 rounded-lg flex items-center justify-center font-black ${
+                  <div className={`w-9 h-9 rounded-lg flex items-center justify-center font-black ${
                     s.team === 'science' ? 'bg-cyan-500 text-slate-950' : 'bg-amber-500 text-slate-950'
                   }`}>
                     {idx + 1}
                   </div>
                   <div>
-                    <div class="text-xs opacity-75 font-bold">{s.role}</div>
-                    <div class="font-bold text-base text-white">{s.name}</div>
+                    <div className="text-xs opacity-75 font-bold">{s.role}</div>
+                    <div className="font-bold text-base text-white">{s.name}</div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Topic Selector Tabs */}
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {/* Topics Navigation Cards */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {courseData.topics.map((topic) => (
               <button
                 key={topic.id}
                 onClick={() => { playSound('click'); setSelectedTopic(topic); setActiveChallenge(null); }}
-                class={`p-4 rounded-2xl border text-left transition transform active:scale-95 flex flex-col justify-between ${
+                className={`p-4 rounded-2xl border text-left transition transform active:scale-95 flex flex-col justify-between ${
                   selectedTopic.id === topic.id
                     ? `bg-gradient-to-br ${topic.color} text-white border-white/40 shadow-xl scale-[1.02]`
                     : 'bg-slate-900/90 border-slate-800 text-slate-300 hover:border-slate-700'
                 }`}
               >
-                <div class="flex justify-between items-center mb-2">
-                  <span class="text-xs px-2 py-0.5 rounded-full bg-black/30 backdrop-blur font-semibold">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-black/30 backdrop-blur font-semibold">
                     {topic.tag}
                   </span>
-                  <i class={`fa-solid ${topic.icon} text-lg opacity-80`}></i>
+                  <i className={`fa-solid ${topic.icon} text-lg opacity-80`}></i>
                 </div>
-                <div class="font-bold text-base md:text-lg">{topic.title}</div>
+                <div className="font-bold text-base md:text-lg">{topic.title}</div>
               </button>
             ))}
           </div>
 
-          {/* Active Topic Deep Dive Dual Column */}
-          <div class="bg-slate-900/90 rounded-3xl border border-slate-800 p-5 md:p-8 shadow-2xl space-y-6">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-800 pb-4 gap-2">
+          {/* Active Topic Perspective Comparison */}
+          <div className="bg-slate-900/90 rounded-3xl border border-slate-800 p-5 md:p-8 shadow-2xl space-y-6">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-800 pb-4 gap-2">
               <div>
-                <span class="text-xs text-cyan-400 font-bold tracking-widest uppercase">當前核心話題</span>
-                <h2 class="text-2xl font-black text-white flex items-center gap-2">
-                  <i class={`fa-solid ${selectedTopic.icon} text-cyan-400`}></i>
+                <span className="text-xs text-cyan-400 font-bold tracking-widest uppercase">當前核心話題</span>
+                <h2 className="text-2xl font-black text-white flex items-center gap-2">
+                  <i className={`fa-solid ${selectedTopic.icon} text-cyan-400`}></i>
                   {selectedTopic.title}
                 </h2>
               </div>
@@ -596,84 +596,87 @@
                 href={selectedTopic.refLink}
                 target="_blank"
                 rel="noreferrer"
-                class="text-xs bg-slate-800 hover:bg-slate-700 text-cyan-300 px-3 py-1.5 rounded-lg border border-slate-700 flex items-center gap-1.5 transition"
+                className="text-xs bg-slate-800 hover:bg-slate-700 text-cyan-300 px-3 py-1.5 rounded-lg border border-slate-700 flex items-center gap-1.5 transition"
               >
-                <i class="fa-solid fa-arrow-up-right-from-square"></i> 查看教案原連結資料
+                <i className="fa-solid fa-arrow-up-right-from-square"></i> 查看教案原連結資料
               </a>
             </div>
 
-            {/* Battle Comparison Grid */}
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Atheist / Science Perspective */}
-              <div class="bg-slate-950/80 rounded-2xl p-5 border-l-4 border-cyan-500 relative overflow-hidden group hover:border-cyan-400 transition">
-                <div class="flex items-center gap-2 mb-3">
-                  <div class="w-8 h-8 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-sm">
-                    <i class="fa-solid fa-flask"></i>
+            {/* Comparison Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Science View */}
+              <div className="bg-slate-950/80 rounded-2xl p-5 border-l-4 border-cyan-500 relative overflow-hidden group hover:border-cyan-400 transition">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-sm">
+                    <i className="fa-solid fa-flask"></i>
                   </div>
-                  <h3 class="font-bold text-lg text-cyan-300">科學家（無神論組）視角</h3>
+                  <h3 className="font-bold text-lg text-cyan-300">科學家（無神論組）視角</h3>
                 </div>
-                <p class="text-slate-300 leading-relaxed text-sm md:text-base">
+                <p className="text-slate-300 leading-relaxed text-sm md:text-base">
                   {selectedTopic.atheistView}
                 </p>
-                <div class="mt-4 pt-3 border-t border-slate-800/80 text-xs text-cyan-400/80 font-mono flex justify-between">
+                <div className="mt-4 pt-3 border-t border-slate-800/80 text-xs text-cyan-400/80 font-mono flex justify-between">
                   <span>推派發言代表：</span>
-                  <span class="font-bold text-cyan-200">{scienceStudents.map(s => s.name).join('、')}</span>
+                  <span className="font-bold text-cyan-200">{scienceStudents.map(s => s.name).join('、')}</span>
                 </div>
               </div>
 
-              {/* Christian / Faith Perspective */}
-              <div class="bg-slate-950/80 rounded-2xl p-5 border-l-4 border-amber-500 relative overflow-hidden group hover:border-amber-400 transition">
-                <div class="flex items-center gap-2 mb-3">
-                  <div class="w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-sm">
-                    <i class="fa-solid fa-cross"></i>
+              {/* Faith View */}
+              <div className="bg-slate-950/80 rounded-2xl p-5 border-l-4 border-amber-500 relative overflow-hidden group hover:border-amber-400 transition">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-sm">
+                    <i className="fa-solid fa-cross"></i>
                   </div>
-                  <h3 class="font-bold text-lg text-amber-300">基督徒組 視角</h3>
+                  <h3 className="font-bold text-lg text-amber-300">基督徒組 視角</h3>
                 </div>
-                <p class="text-slate-300 leading-relaxed text-sm md:text-base">
+                <p className="text-slate-300 leading-relaxed text-sm md:text-base">
                   {selectedTopic.christianView}
                 </p>
-                <div class="mt-4 pt-3 border-t border-slate-800/80 text-xs text-amber-400/80 font-mono flex justify-between">
+                <div className="mt-4 pt-3 border-t border-slate-800/80 text-xs text-amber-400/80 font-mono flex justify-between">
                   <span>推派發言代表：</span>
-                  <span class="font-bold text-amber-200">{faithStudents.map(s => s.name).join('、')}</span>
+                  <span className="font-bold text-amber-200">{faithStudents.map(s => s.name).join('、')}</span>
                 </div>
               </div>
             </div>
 
-            {/* Interactive Discussion Prompts */}
-            <div class="bg-slate-950/50 rounded-2xl p-5 border border-slate-800/80">
-              <h4 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
-                <i class="fa-solid fa-comments text-amber-400"></i> 小組交流討論挑戰題（請四位學生：黃恩、牧霖、采恩、黃昕 輪流發言）：
+            {/* Questions to Discuss */}
+            <div className="bg-slate-950/50 rounded-2xl p-5 border border-slate-800/80">
+              <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                <i className="fa-solid fa-comments text-amber-400"></i> 小組交流討論挑戰題（請四位學生：黃恩、牧霖、采恩、黃昕 輪流發言）：
               </h4>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {selectedTopic.discussionQuestions.map((q, idx) => (
                   <div 
                     key={idx}
                     onClick={() => { playSound('click'); setActiveChallenge(idx); }}
-                    class={`p-4 rounded-xl border cursor-pointer transition flex items-start gap-3 ${
+                    className={`p-4 rounded-xl border cursor-pointer transition flex items-start gap-3 ${
                       activeChallenge === idx
                         ? 'bg-indigo-900/50 border-indigo-500 text-white shadow-lg'
                         : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800'
                     }`}
                   >
-                    <span class="w-6 h-6 rounded-full bg-indigo-500/30 text-indigo-300 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="w-6 h-6 rounded-full bg-indigo-500/30 text-indigo-300 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
                       Q{idx + 1}
                     </span>
-                    <div class="text-sm font-medium leading-snug">{q}</div>
+                    <div className="text-sm font-medium leading-snug">{q}</div>
                   </div>
                 ))}
               </div>
               {activeChallenge !== null && (
-                <div class="mt-4 p-3 rounded-xl bg-indigo-950/60 border border-indigo-800/60 text-xs text-indigo-200 flex items-center gap-2 animate-fadeIn">
-                  <i class="fa-solid fa-lightbulb text-amber-400 text-base"></i>
+                <div className="mt-4 p-3 rounded-xl bg-indigo-950/60 border border-indigo-800/60 text-xs text-indigo-200 flex items-center gap-2 animate-fadeIn">
+                  <i className="fa-solid fa-lightbulb text-amber-400 text-base"></i>
                   <span>提示：討論重點不在於打敗對方，而是學習用神的智慧與謙卑互相理解！</span>
                 </div>
               )}
             </div>
           </div>
         </div>
+      );
+    }
+
     function TouchQuizGame({ courseData, scores, setScores, students }) {
       const [currentQIndex, setCurrentQIndex] = useState(0);
-      const [buzzedTeam, setBuzzedTeam] = useState(null); // 'science' | 'faith' | null
+      const [buzzedTeam, setBuzzedTeam] = useState(null);
       const [selectedOption, setSelectedOption] = useState(null);
       const [showExplanation, setShowExplanation] = useState(false);
       const [timer, setTimer] = useState(15);
@@ -732,98 +735,94 @@
         if (currentQIndex < courseData.quizQuestions.length - 1) {
           setCurrentQIndex((prev) => prev + 1);
         } else {
-          setCurrentQIndex(0); // Loop or finish
+          setCurrentQIndex(0);
         }
       };
 
       return (
-        <div class="space-y-6 max-w-5xl mx-auto">
+        <div className="space-y-6 max-w-5xl mx-auto">
           {/* Top Scoreboard */}
-          <div class="grid grid-cols-2 gap-4">
-            {/* Team Science Score */}
-            <div class={`p-4 rounded-2xl border transition ${
+          <div className="grid grid-cols-2 gap-4">
+            <div className={`p-4 rounded-2xl border transition ${
               buzzedTeam === 'science' ? 'bg-cyan-900/60 border-cyan-400 glow-cyan scale-[1.02]' : 'bg-slate-900 border-slate-800'
             }`}>
-              <div class="flex justify-between items-center">
+              <div className="flex justify-between items-center">
                 <div>
-                  <span class="text-xs font-black text-cyan-400 uppercase tracking-widest flex items-center gap-1.5">
-                    <i class="fa-solid fa-flask"></i> 科學家組
+                  <span className="text-xs font-black text-cyan-400 uppercase tracking-widest flex items-center gap-1.5">
+                    <i className="fa-solid fa-flask"></i> 科學家組
                   </span>
-                  <div class="text-xs text-cyan-200 font-bold mt-0.5">({scienceStudents})</div>
+                  <div className="text-xs text-cyan-200 font-bold mt-0.5">({scienceStudents})</div>
                 </div>
-                <span class="text-3xl font-black text-cyan-300">{scores.teamScience} <span class="text-xs text-slate-500">PTS</span></span>
+                <span className="text-3xl font-black text-cyan-300">{scores.teamScience} <span className="text-xs text-slate-500">PTS</span></span>
               </div>
             </div>
 
-            {/* Team Faith Score */}
-            <div class={`p-4 rounded-2xl border transition ${
+            <div className={`p-4 rounded-2xl border transition ${
               buzzedTeam === 'faith' ? 'bg-amber-900/60 border-amber-400 glow-amber scale-[1.02]' : 'bg-slate-900 border-slate-800'
             }`}>
-              <div class="flex justify-between items-center">
+              <div className="flex justify-between items-center">
                 <div>
-                  <span class="text-xs font-black text-amber-400 uppercase tracking-widest flex items-center gap-1.5">
-                    <i class="fa-solid fa-cross"></i> 基督徒組
+                  <span className="text-xs font-black text-amber-400 uppercase tracking-widest flex items-center gap-1.5">
+                    <i className="fa-solid fa-cross"></i> 基督徒組
                   </span>
-                  <div class="text-xs text-amber-200 font-bold mt-0.5">({faithStudents})</div>
+                  <div className="text-xs text-amber-200 font-bold mt-0.5">({faithStudents})</div>
                 </div>
-                <span class="text-3xl font-black text-amber-300">{scores.teamFaith} <span class="text-xs text-slate-500">PTS</span></span>
+                <span className="text-3xl font-black text-amber-300">{scores.teamFaith} <span className="text-xs text-slate-500">PTS</span></span>
               </div>
             </div>
           </div>
 
-          {/* Main Quiz Screen */}
-          <div class="bg-slate-900/90 rounded-3xl border border-slate-800 p-6 md:p-8 shadow-2xl relative overflow-hidden">
-            {/* Progress Header */}
-            <div class="flex justify-between items-center mb-6">
-              <span class="text-xs font-bold text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">
+          {/* Interactive Screen Card */}
+          <div className="bg-slate-900/90 rounded-3xl border border-slate-800 p-6 md:p-8 shadow-2xl relative overflow-hidden">
+            <div className="flex justify-between items-center mb-6">
+              <span className="text-xs font-bold text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">
                 題目 {currentQIndex + 1} / {courseData.quizQuestions.length}
               </span>
 
               {buzzedTeam && (
-                <div class="text-sm font-bold flex items-center gap-2">
-                  <i class="fa-solid fa-stopwatch text-amber-400 animate-spin"></i>
-                  <span class="text-slate-300">回答倒數：</span>
-                  <span class={`text-xl font-black ${timer <= 3 ? 'text-red-400' : 'text-amber-400'}`}>{timer}s</span>
+                <div className="text-sm font-bold flex items-center gap-2">
+                  <i className="fa-solid fa-stopwatch text-amber-400 animate-spin"></i>
+                  <span className="text-slate-300">回答倒數：</span>
+                  <span className={`text-xl font-black ${timer <= 3 ? 'text-red-400' : 'text-amber-400'}`}>{timer}s</span>
                 </div>
               )}
             </div>
 
-            {/* Question Text */}
-            <h3 class="text-xl md:text-2xl font-black text-white leading-relaxed mb-6">
+            <h3 className="text-xl md:text-2xl font-black text-white leading-relaxed mb-6">
               {q.question}
             </h3>
 
-            {/* BUZZ-IN BUTTONS (If no team buzzed in yet) */}
+            {/* BUZZER BUTTONS */}
             {!buzzedTeam && (
-              <div class="my-8 py-6 border-y border-slate-800/80">
-                <p class="text-center text-sm font-bold text-slate-400 mb-4 animate-bounce">
+              <div className="my-8 py-6 border-y border-slate-800/80">
+                <p className="text-center text-sm font-bold text-slate-400 mb-4 animate-bounce">
                   👇 請點擊電子白板下方按鈕搶答！ 👇
                 </p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <button
                     onClick={() => handleBuzz('science')}
-                    class="py-8 rounded-2xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-black text-2xl shadow-xl glow-cyan transform active:scale-95 transition pulse-btn flex flex-col items-center justify-center gap-2"
+                    className="py-8 rounded-2xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-black text-2xl shadow-xl glow-cyan transform active:scale-95 transition pulse-btn flex flex-col items-center justify-center gap-2"
                   >
-                    <i class="fa-solid fa-hand-pointer text-3xl"></i>
+                    <i className="fa-solid fa-hand-pointer text-3xl"></i>
                     科學家組 搶答！
                   </button>
                   <button
                     onClick={() => handleBuzz('faith')}
-                    class="py-8 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 font-black text-2xl shadow-xl glow-amber transform active:scale-95 transition pulse-btn flex flex-col items-center justify-center gap-2"
+                    className="py-8 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 font-black text-2xl shadow-xl glow-amber transform active:scale-95 transition pulse-btn flex flex-col items-center justify-center gap-2"
                   >
-                    <i class="fa-solid fa-hand-pointer text-3xl"></i>
+                    <i className="fa-solid fa-hand-pointer text-3xl"></i>
                     基督徒組 搶答！
                   </button>
                 </div>
               </div>
             )}
 
-            {/* OPTIONS AREA (Active once buzzed) */}
+            {/* OPTION SELECT BUTTONS */}
             {buzzedTeam && (
-              <div class="space-y-3 mb-6">
-                <div class="p-2 text-xs font-bold text-center rounded-lg bg-slate-800 text-slate-300 mb-2">
+              <div className="space-y-3 mb-6">
+                <div className="p-2 text-xs font-bold text-center rounded-lg bg-slate-800 text-slate-300 mb-2">
                   搶答成功：
-                  <span class={`font-black text-sm ml-1 ${buzzedTeam === 'science' ? 'text-cyan-400' : 'text-amber-400'}`}>
+                  <span className={`font-black text-sm ml-1 ${buzzedTeam === 'science' ? 'text-cyan-400' : 'text-amber-400'}`}>
                     {buzzedTeam === 'science' ? `科學家組 (${scienceStudents})` : `基督徒組 (${faithStudents})`}
                   </span>
                   ，請點擊螢幕選擇答案：
@@ -845,17 +844,17 @@
                       key={idx}
                       onClick={() => handleSelectOption(idx)}
                       disabled={selectedOption !== null}
-                      class={`w-full p-4 rounded-xl border text-left text-base font-medium transition flex items-center gap-3 ${btnStyle}`}
+                      className={`w-full p-4 rounded-xl border text-left text-base font-medium transition flex items-center gap-3 ${btnStyle}`}
                     >
-                      <span class="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-bold flex-shrink-0">
+                      <span className="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-bold flex-shrink-0">
                         {String.fromCharCode(65 + idx)}
                       </span>
                       <span>{option}</span>
                       {selectedOption !== null && idx === q.correct && (
-                        <i class="fa-solid fa-circle-check text-emerald-400 ml-auto text-xl"></i>
+                        <i className="fa-solid fa-circle-check text-emerald-400 ml-auto text-xl"></i>
                       )}
                       {selectedOption === idx && idx !== q.correct && (
-                        <i class="fa-solid fa-circle-xmark text-rose-400 ml-auto text-xl"></i>
+                        <i className="fa-solid fa-circle-xmark text-rose-400 ml-auto text-xl"></i>
                       )}
                     </button>
                   );
@@ -863,25 +862,25 @@
               </div>
             )}
 
-            {/* Explanation & Summary after Answer */}
+            {/* EXPLANATION */}
             {showExplanation && (
-              <div class="mt-6 p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 animate-fadeIn">
-                <div class="flex items-center gap-2 text-emerald-400 font-bold text-sm">
-                  <i class="fa-solid fa-circle-info"></i> 題目解析與思考提示
+              <div className="mt-6 p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 animate-fadeIn">
+                <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm">
+                  <i className="fa-solid fa-circle-info"></i> 題目解析與思考提示
                 </div>
-                <p class="text-slate-300 text-sm leading-relaxed">
+                <p className="text-slate-300 text-sm leading-relaxed">
                   {q.explanation}
                 </p>
-                <div class="text-xs text-amber-300/90 font-semibold bg-amber-950/40 p-2.5 rounded-lg border border-amber-900/40">
+                <div className="text-xs text-amber-300/90 font-semibold bg-amber-950/40 p-2.5 rounded-lg border border-amber-900/40">
                   💡 {q.teamTip}
                 </div>
 
-                <div class="pt-2 flex justify-end">
+                <div className="pt-2 flex justify-end">
                   <button
                     onClick={handleNextQuestion}
-                    class="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-sm shadow-lg flex items-center gap-2 transition transform active:scale-95"
+                    className="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-sm shadow-lg flex items-center gap-2 transition transform active:scale-95"
                   >
-                    下一題 <i class="fa-solid fa-arrow-right"></i>
+                    下一題 <i className="fa-solid fa-arrow-right"></i>
                   </button>
                 </div>
               </div>
@@ -893,64 +892,64 @@
 
     function TeacherSummary({ courseData }) {
       return (
-        <div class="max-w-4xl mx-auto space-y-6">
-          {/* Main Key Lessons Card */}
-          <div class="bg-slate-900/90 rounded-3xl border border-slate-800 p-6 md:p-8 shadow-2xl space-y-6">
-            <div class="border-b border-slate-800 pb-4">
-              <span class="text-xs font-bold text-purple-400 uppercase tracking-widest">教師總結重點</span>
-              <h2 class="text-2xl font-black text-white flex items-center gap-2 mt-1">
-                <i class="fa-solid fa-graduation-cap text-purple-400"></i>
+        <div className="max-w-4xl mx-auto space-y-6 animate-fadeIn">
+          {/* Key Summary Points */}
+          <div className="bg-slate-900/90 rounded-3xl border border-slate-800 p-6 md:p-8 shadow-2xl space-y-6">
+            <div className="border-b border-slate-800 pb-4">
+              <span className="text-xs font-bold text-purple-400 uppercase tracking-widest">教師總結重點</span>
+              <h2 className="text-2xl font-black text-white flex items-center gap-2 mt-1">
+                <i className="fa-solid fa-graduation-cap text-purple-400"></i>
                 科學與信仰的尊重與和諧
               </h2>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
-                <h3 class="font-bold text-cyan-300 text-base flex items-center gap-2">
-                  <i class="fa-solid fa-compass"></i> 不同領域的互補
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
+                <h3 className="font-bold text-cyan-300 text-base flex items-center gap-2">
+                  <i className="fa-solid fa-compass"></i> 不同領域的互補
                 </h3>
-                <p class="text-xs text-slate-300 leading-relaxed">
+                <p className="text-xs text-slate-300 leading-relaxed">
                   科學是透過反覆驗證去解釋自然事實，不同時代會有不同局限。信仰則是探討人與神之間的親密關係。
                 </p>
               </div>
 
-              <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
-                <h3 class="font-bold text-amber-300 text-base flex items-center gap-2">
-                  <i class="fa-solid fa-lightbulb"></i> 讚嘆神的智慧
+              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
+                <h3 className="font-bold text-amber-300 text-base flex items-center gap-2">
+                  <i className="fa-solid fa-lightbulb"></i> 讚嘆神的智慧
                 </h3>
-                <p class="text-xs text-slate-300 leading-relaxed">
+                <p className="text-xs text-slate-300 leading-relaxed">
                   神喜歡人用他所賞賜的智慧了解世界並發出讚嘆，但我們不需因為科學有限就自行創造違背聖經的理論。
                 </p>
               </div>
             </div>
 
-            <div class="p-4 rounded-2xl bg-purple-950/40 border border-purple-800/60 space-y-2">
-              <h3 class="font-bold text-purple-200 text-base flex items-center gap-2">
-                <i class="fa-solid fa-heart-pulse"></i> 對待硬心者的憐憫
+            <div className="p-4 rounded-2xl bg-purple-950/40 border border-purple-800/60 space-y-2">
+              <h3 className="font-bold text-purple-200 text-base flex items-center gap-2">
+                <i className="fa-solid fa-heart-pulse"></i> 對待硬心者的憐憫
               </h3>
-              <p class="text-xs text-purple-200/80 leading-relaxed">
+              <p className="text-xs text-purple-200/80 leading-relaxed">
                 聖靈（禱告說方言）是神存在的實據。許多人不信是因為未曾親身體驗或硬心。我們與他人談道時應持憐憫與謙卑，而非憤怒爭執。
               </p>
             </div>
           </div>
 
-          {/* Guided Prayer Card */}
-          <div class="bg-gradient-to-br from-indigo-950/90 to-purple-950/90 rounded-3xl border border-indigo-800/60 p-6 md:p-8 shadow-2xl space-y-4">
-            <div class="flex items-center gap-3 border-b border-indigo-800/50 pb-3">
-              <div class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-300 flex items-center justify-center font-bold text-lg">
-                <i class="fa-solid fa-hands-praying"></i>
+          {/* Guided Prayer Section */}
+          <div className="bg-gradient-to-br from-indigo-950/90 to-purple-950/90 rounded-3xl border border-indigo-800/60 p-6 md:p-8 shadow-2xl space-y-4">
+            <div className="flex items-center gap-3 border-b border-indigo-800/50 pb-3">
+              <div className="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-300 flex items-center justify-center font-bold text-lg">
+                <i className="fa-solid fa-hands-praying"></i>
               </div>
               <div>
-                <h3 class="font-black text-xl text-white">悟性禱告（帶領國中生同心禱告）</h3>
-                <p class="text-xs text-indigo-300">奉主耶穌聖名禱告</p>
+                <h3 className="font-black text-xl text-white">悟性禱告（帶領國中生同心禱告）</h3>
+                <p className="text-xs text-indigo-300">奉主耶穌聖名禱告</p>
               </div>
             </div>
 
-            <div class="space-y-3 text-sm text-indigo-100/90 leading-relaxed font-medium bg-slate-950/50 p-5 rounded-2xl border border-indigo-900/50">
+            <div className="space-y-3 text-sm text-indigo-100/90 leading-relaxed font-medium bg-slate-950/50 p-5 rounded-2xl border border-indigo-900/50">
               <p>親愛的主耶穌，感謝您賞賜智慧給我們可以去認識、揣摩和分析您所創造的世界。</p>
               <p>主啊，你知道我們常常是憑著眼見在跟隨你。求你能夠給我們更多的信心，並在信仰上有更多的體驗，能在這個有許多似是而非思潮的世界中，站穩腳步，不要隨流失去。</p>
               <p>能更堅定的相信，並用您賞賜的理性來認識您，在科學尚未能充分解釋之時，又能持續地相信。並用謙卑的心態跟無神論者和基督徒溝通。</p>
-              <p class="text-right font-black text-indigo-300 text-base">哈利路亞，阿們。</p>
+              <p className="text-right font-black text-indigo-300 text-base">哈利路亞，阿們。</p>
             </div>
           </div>
         </div>

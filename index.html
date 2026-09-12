@@ -130,7 +130,7 @@
 
     const courseData = {
       title: "科學家（無神論者）與基督徒的PK賽",
-      target: "國中初級班 / 4人小組討論（黃恩、牧霖、采恩、黃昕）",
+      target: "國中初級班 / 4人小組討論（牧霖、采恩、黃昕、阿志老師）",
       verse: "「深哉，神豐富的智慧和知識！他的判斷何其難測！他的蹤跡何其難尋！」（羅馬書 11:33）",
       
       topics: [
@@ -265,10 +265,10 @@
       const [activeTab, setActiveTab] = useState('discussion'); // 'discussion', 'game', 'summary'
       const [scores, setScores] = useState({ teamScience: 0, teamFaith: 0 });
       const [students, setStudents] = useState([
-        { id: 1, name: "黃恩", team: "science", role: "科學家組" },
-        { id: 2, name: "牧霖", team: "science", role: "科學家組" },
-        { id: 3, name: "采恩", team: "faith", role: "基督徒組" },
-        { id: 4, name: "黃昕", team: "faith", role: "基督徒組" },
+        { id: 1, name: "牧霖", team: "science", role: "科學家組" },
+        { id: 2, name: "采恩", team: "science", role: "科學家組" },
+        { id: 3, name: "黃昕", team: "faith", role: "基督徒組" },
+        { id: 4, name: "阿志老師", team: "faith", role: "基督徒組" },
       ]);
       const [showWheelModal, setShowWheelModal] = useState(false);
 
@@ -287,7 +287,7 @@
                   </h1>
                   <p className="text-xs text-slate-400 flex items-center gap-2 mt-0.5">
                     <span className="bg-indigo-950 text-indigo-300 px-2 py-0.5 rounded border border-indigo-800 font-bold">國中班小組</span>
-                    <span>成員：黃恩、牧霖、采恩、黃昕</span>
+                    <span>成員：牧霖、采恩、黃昕、阿志老師</span>
                   </p>
                 </div>
               </div>
@@ -355,7 +355,7 @@
       const [resultMessage, setResultMessage] = useState("");
       const canvasRef = useRef(null);
 
-      const names = ["黃恩", "牧霖", "采恩", "黃昕"];
+      const names = ["牧霖", "采恩", "黃昕", "阿志老師"];
       const colors = ["#06b6d4", "#3b82f6", "#f59e0b", "#8b5cf6"];
 
       useEffect(() => {
@@ -480,8 +480,8 @@
 
             <div>
               <span className="text-xs font-bold uppercase tracking-widest text-amber-400">觸控幸運轉盤</span>
-              <h2 className="text-2xl font-black text-white mt-1">國中生隨機 PK 分組轉盤</h2>
-              <p className="text-xs text-slate-400 mt-1">成員：黃恩、牧霖、采恩、黃昕（自動平分為兩組）</p>
+              <h2 className="text-2xl font-black text-white mt-1">成員隨機 PK 分組轉盤</h2>
+              <p className="text-xs text-slate-400 mt-1">成員：牧霖、采恩、黃昕、阿志老師（自動平分為兩組）</p>
             </div>
 
             <div className="relative w-[280px] h-[280px] mx-auto flex items-center justify-center">
@@ -642,7 +642,7 @@
             {/* Questions to Discuss */}
             <div className="bg-slate-950/50 rounded-2xl p-5 border border-slate-800/80">
               <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
-                <i className="fa-solid fa-comments text-amber-400"></i> 小組交流討論挑戰題（請四位學生：黃恩、牧霖、采恩、黃昕 輪流發言）：
+                <i className="fa-solid fa-comments text-amber-400"></i> 小組交流討論挑戰題（請四位成員：牧霖、采恩、黃昕、阿志老師 輪流發言）：
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {selectedTopic.discussionQuestions.map((q, idx) => (

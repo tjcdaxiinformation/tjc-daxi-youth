@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>真耶穌教會：1926年臺灣傳教動態軌跡</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+  
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #f5f5f4; /* Warm stone background */
+      color: #292524;
+      margin: 0;
+      overflow: hidden; /* Prevent scrolling for app-like feel */
+    }
+    h1, h2, h3, .serif {
+      font-family: 'Noto Serif TC', serif;
+    }
+    
+    /* Map Animations */
+    .map-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #e7e5e4; /* Light sea/background */
+      overflow: hidden;
+    }
+    
+    .taiwan-path {
+      fill: #d6d3d1;
+      stroke: #a8a29e;
+      stroke-width: 1.5;
+      transition: fill 0.5s ease;
+    }
+    
+    /* Points */
+    .location-pin {
+      fill: #7f1d1d;
+      opacity: 0;
+      transform: scale(0);
+      transform-origin: center;
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .location-pin.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .location-pin.highlight {
+      fill: #b45309;
+      stroke: #fff;
+      stroke-width: 2;
+    }
+    
+    /* Labels */
+    .location-label {
+      font-size: 14px;
+      font-weight: 700;
+      fill: #1c1917;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      text-anchor: middle;
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+    .location-label.active {
+      opacity: 1;
+    }
+
+    /* Lines (Routes) */
+    .route-line {
+      fill: none;
+      stroke: #b45309;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      opacity: 0.8;
+    }
+    .route-line.draw {
+      animation: dash 1.5s ease-in-out forwards;
+    }
+    @keyframes dash {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    /* Timeline Styles */
+    .timeline-item {
+      opacity: 0.4;
+      transform: translateX(20px);
+      transition: all 0.4s ease;
+      border-left: 4px solid #d6d3d1;
+    }
+    .timeline-item.active {
+      opacity: 1;
+      transform: translateX(0);
+      border-left: 4px solid #7f1d1d;
+      background-color: #ffffff;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .timeline-item.past {
+      opacity: 0.7;
+      transform: translateX(0);
+      border-left: 4px solid #b45309;
+    }
+    
+    .scroll-area {
+      scrollbar-width: thin;
+      scrollbar-color: #a8a29e #f5f5f4;
+    }
+  </style>
+</head>
+<body class="h-screen w-screen flex flex-col md:flex-row">
+
+  <!-- Left Side: Interactive Map -->
+  <div class="w-full md:w-3/5 h-1/2 md:h-full relative shadow-lg z-10 flex items-center justify-center bg-[#f0f0ee]">
+    <!-- Decorative compass -->
+    <div class="absolute top-6 left-6 text-[#a8a29e] opacity-50 flex flex-col items-center">
+      <i class="fa-regular fa-compass text-4xl mb-1"></i>
+      <span class="text-xs font-bold tracking-widest">N</span>
+    </div>
+    
+    <!-- SVG Map -->
+    <!-- ViewBox coordinates adjusted for Taiwan's aspect ratio -->
+    <svg class="w-full h-full max-h-screen" viewBox="0 0 500 700" preserveAspectRatio="xMidYMid meet">
+      <!-- Defs for arrowheads -->
+      <defs>
+        <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <polygon points="0 0, 6 3, 0 6" fill="#b45309" />
+        </marker>
+        <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+        </filter>
+      </defs>
+
+      <!-- Stylized Taiwan Path (Simplified representation) -->
+      <path class="taiwan-path" filter="url(#shadow)" d="M280,100 Q320,80 340,150 Q360,250 310,350 Q280,450 250,550 Q230,600 200,600 Q180,550 150,450 Q120,350 140,250 Q160,150 220,120 Z" />
+
+      <!-- Routes (Drawn via JS) -->
+      <g id="routes-layer"></g>
+
+      <!-- Locations (Managed via JS) -->
+      <g id="pins-layer"></g>
+    </svg>
+
+    <!-- Map Legend / Controls -->
+    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+      <div class="bg-white/90 backdrop-blur px-4 py-2 rounded-lg shadow text-sm font-semibold text-stone-600">
+        <span class="inline-block w-3 h-3 rounded-full bg-[#7f1d1d] mr-2"></span> 傳教足跡
+      </div>
+      <div class="flex gap-2">
+        <button id="btn-prev" class="bg-white hover:bg-stone-100 text-stone-700 w-10 h-10 rounded-full shadow flex items-center justify-center transition-colors disabled:opacity-50">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button id="btn-play" class="bg-[#7f1d1d] hover:bg-[#991b1b] text-white w-10 h-10 rounded-full shadow flex items-center justify-center transition-colors">
+          <i class="fa-solid fa-play"></i>
+        </button>
+        <button id="btn-next" class="bg-white hover:bg-stone-100 text-stone-700 w-10 h-10 rounded-full shadow flex items-center justify-center transition-colors disabled:opacity-50">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Side: Story/Timeline Panel -->
+  <div class="w-full md:w-2/5 h-1/2 md:h-full bg-[#fafaf9] border-l border-stone-200 flex flex-col relative z-20 shadow-[-10px_0_20px_-10px_rgba(0,0,0,0.05)]">
+    <!-- Header -->
+    <div class="p-8 pb-4 border-b border-stone-200 bg-white z-10">
+      <p class="text-[#b45309] font-bold tracking-widest text-sm mb-2">傳教軌跡 (1925-1926)</p>
+      <h1 class="serif text-3xl font-bold text-stone-900 leading-tight">
+        真道傳入臺灣
+      </h1>
+      <p class="text-stone-500 mt-2 text-sm leading-relaxed">
+        四十天成立三處教會，施浸百餘人，震撼臺灣基督教界。奠定真教會臺灣傳教之基礎。
+      </p>
+    </div>
+
+    <!-- Timeline Scroll Area -->
+    <div id="timeline-container" class="flex-1 overflow-y-auto scroll-area p-8 pb-32 flex flex-col gap-6 relative">
+      <!-- Steps will be injected here by JS -->
+    </div>
+  </div>
+
+  <script>
+    // --- Data Definition ---
+    // Coordinates based on the 500x700 viewBox
+    const locations = {
+      xiamen: { id: 'xiamen', x: 20, y: 220, label: '廈門 (出發)' },
+      taipei: { id: 'taipei', x: 300, y: 130, label: '臺北' },
+      keelung: { id: 'keelung', x: 330, y: 110, label: '基隆' },
+      qingshui: { id: 'qingshui', x: 210, y: 240, label: '清水 / 鹿寮' },
+      xianxi: { id: 'xianxi', x: 185, y: 280, label: '線西 (彰化)' },
+      niutiaowan: { id: 'niutiaowan', x: 155, y: 380, label: '牛挑灣 (嘉義)' },
+      tainan: { id: 'tainan', x: 130, y: 460, label: '臺南' }
+    };
+
+    const steps = [
+      {
+        id: 0,
+        date: "1925年 秋",
+        title: "福音種子，初傳故鄉",
+        desc: "黃呈聰之父黃秀兩先回臺，向故鄉彰化縣線西之親戚證道，長老會信徒領受真道者頗多，部分已受聖靈。",
+        points: ['xianxi'],
+        route: null
+      },
+      {
+        id: 1,
+        date: "1926年 3月2-3日",
+        title: "揚帆啟程，抵達臺灣",
+        desc: "黃以利沙、吳約翰等領導張巴拿巴、郭多馬等工人，由廈門搭船，三日抵達臺北。",
+        points: ['taipei'],
+        route: { from: 'xiamen', to: 'taipei', curve: 'Q 150 120' } // curved path
+      },
+      {
+        id: 2,
+        date: "1926年 3月5日",
+        title: "首次施浸，成立線西教會",
+        desc: "抵達線西鄉十五張犁首次施浸，共六十二名入信，且按立長執，成立臺灣第一間教會——線西教會。",
+        points: ['taipei', 'xianxi'],
+        route: { from: 'taipei', to: 'xianxi', curve: 'Q 280 200' }
+      },
+      {
+        id: 3,
+        date: "1926年 3月12日",
+        title: "抵達臺南，分班佈道",
+        desc: "抵達臺南後分為兩班，一班留臺南，另一班前往牛挑灣開佈道會。",
+        points: ['xianxi', 'tainan'],
+        route: { from: 'xianxi', to: 'tainan', curve: 'Q 170 380' }
+      },
+      {
+        id: 4,
+        date: "1926年 3月18日",
+        title: "成立牛挑灣教會",
+        desc: "於牛挑灣(今嘉義朴子)廿七名受浸，成立牛挑灣教會。",
+        points: ['tainan', 'niutiaowan'],
+        route: { from: 'tainan', to: 'niutiaowan', curve: 'Q 120 420' }
+      },
+      {
+        id: 5,
+        date: "1926年 4月2-5日",
+        title: "成立清水教會",
+        desc: "抵達清水，五日在鹿寮十一名受浸，成立清水教會。",
+        points: ['niutiaowan', 'qingshui'],
+        route: { from: 'niutiaowan', to: 'qingshui', curve: 'Q 150 300' }
+      },
+      {
+        id: 6,
+        date: "1926年 4月6日",
+        title: "臺北文化講座",
+        desc: "轉往臺北，在文化講座佈道兩天，聽眾六百餘人。",
+        points: ['qingshui', 'taipei'],
+        route: { from: 'qingshui', to: 'taipei', curve: 'Q 220 180' }
+      },
+      {
+        id: 7,
+        date: "1926年 4月12日",
+        title: "奠定基礎，榮歸大陸",
+        desc: "結束此次聖工，由基隆搭船回大陸。僅四十天成立三處教會，震撼臺灣基督教界。",
+        points: ['taipei', 'keelung'],
+        route: { from: 'taipei', to: 'keelung', curve: 'Q 315 110' },
+        endArrow: { from: 'keelung', to: {x: 450, y: 50}, curve: 'Q 400 80' } // Arrow pointing off Taiwan
+      }
+    ];
+
+    // --- State Management ---
+    let currentStep = -1;
+    let isPlaying = false;
+    let playInterval;
+
+    // --- DOM Elements ---
+    const pinsLayer = document.getElementById('pins-layer');
+    const routesLayer = document.getElementById('routes-layer');
+    const timelineContainer = document.getElementById('timeline-container');
+    const btnNext = document.getElementById('btn-next');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnPlay = document.getElementById('btn-play');
+
+    // --- Initialization ---
+    function init() {
+      // 1. Draw all points (hidden initially)
+      Object.values(locations).forEach(loc => {
+        // Dot
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', loc.x);
+        circle.setAttribute('cy', loc.y);
+        circle.setAttribute('r', '6');
+        circle.setAttribute('class', 'location-pin');
+        circle.setAttribute('id', `pin-${loc.id}`);
+        
+        // Label
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', loc.x);
+        // Offset label depending on position to avoid overlapping
+        text.setAttribute('y', loc.y - 12);
+        if(loc.id === 'xiamen' || loc.id === 'xianxi' || loc.id === 'tainan' || loc.id === 'niutiaowan') {
+             text.setAttribute('x', loc.x - 10);
+             text.setAttribute('text-anchor', 'end');
+             text.setAttribute('y', loc.y + 5);
+        } else if (loc.id === 'keelung' || loc.id === 'taipei') {
+             text.setAttribute('x', loc.x + 15);
+             text.setAttribute('text-anchor', 'start');
+        }
+
+        text.setAttribute('class', 'location-label');
+        text.setAttribute('id', `label-${loc.id}`);
+        text.textContent = loc.label;
+
+        pinsLayer.appendChild(circle);
+        pinsLayer.appendChild(text);
+      });
+
+      // 2. Build Timeline UI
+      steps.forEach((step, index) => {
+        const item = document.createElement('div');
+        item.className = `timeline-item p-4 rounded-r-lg`;
+        item.id = `timeline-step-${index}`;
+        item.innerHTML = `
+          <div class="text-[#7f1d1d] font-bold text-sm mb-1">${step.date}</div>
+          <h3 class="serif text-xl font-bold text-stone-800 mb-2">${step.title}</h3>
+          <p class="text-stone-600 text-sm leading-relaxed">${step.desc}</p>
+        `;
+        // Allow clicking timeline to jump to step
+        item.addEventListener('click', () => goToStep(index));
+        timelineContainer.appendChild(item);
+      });
+
+      // 3. Event Listeners
+      btnNext.addEventListener('click', () => { stopPlay(); nextStep(); });
+      btnPrev.addEventListener('click', () => { stopPlay(); prevStep(); });
+      btnPlay.addEventListener('click', togglePlay);
+
+      // Start at step 0
+      setTimeout(() => goToStep(0), 500);
+    }
+
+    // --- Core Logic ---
+    function goToStep(stepIndex) {
+      if (stepIndex < 0 || stepIndex >= steps.length) return;
+      currentStep = stepIndex;
+
+      // Update UI Controls
+      btnPrev.disabled = currentStep === 0;
+      btnNext.disabled = currentStep === steps.length - 1;
+
+      // Update Timeline Styling
+      document.querySelectorAll('.timeline-item').forEach((el, idx) => {
+        el.classList.remove('active', 'past');
+        if (idx === currentStep) {
+          el.classList.add('active');
+          // Scroll into view safely
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else if (idx < currentStep) {
+          el.classList.add('past');
+        }
+      });
+
+      // Draw Map
+      renderMapForStep(currentStep);
+    }
+
+    function nextStep() {
+      if (currentStep < steps.length - 1) {
+        goToStep(currentStep + 1);
+      } else {
+        stopPlay();
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 0) goToStep(currentStep - 1);
+    }
+
+    function togglePlay() {
+      if (isPlaying) {
+        stopPlay();
+      } else {
+        isPlaying = true;
+        btnPlay.innerHTML = '<i class="fa-solid fa-pause"></i>';
+        if (currentStep === steps.length - 1) goToStep(0); // loop back
+        else nextStep();
+        
+        playInterval = setInterval(() => {
+          if(currentStep >= steps.length - 1) {
+             stopPlay();
+          } else {
+             nextStep();
+          }
+        }, 3500); // 3.5 seconds per step
+      }
+    }
+
+    function stopPlay() {
+      isPlaying = false;
+      btnPlay.innerHTML = '<i class="fa-solid fa-play"></i>';
+      clearInterval(playInterval);
+    }
+
+    // --- SVG Map Rendering ---
+    function renderMapForStep(index) {
+      // 1. Clear previous routes (we redraw up to current step for consistency)
+      routesLayer.innerHTML = '';
+      
+      // Reset all pins
+      document.querySelectorAll('.location-pin').forEach(p => p.classList.remove('active', 'highlight'));
+      document.querySelectorAll('.location-label').forEach(l => l.classList.remove('active'));
+
+      // 2. Draw all routes up to current step
+      for (let i = 0; i <= index; i++) {
+        const s = steps[i];
+        
+        // Show pins for this step
+        s.points.forEach(pt => {
+          const pin = document.getElementById(`pin-${pt}`);
+          const lbl = document.getElementById(`label-${pt}`);
+          if(pin) {
+            pin.classList.add('active');
+            // Highlight only the pins of the CURRENT step
+            if (i === index) pin.classList.add('highlight');
+          }
+          if(lbl) lbl.classList.add('active');
+        });
+
+        // Draw route line
+        if (s.route) {
+          const fromLoc = locations[s.route.from];
+          const toLoc = locations[s.route.to];
+          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          // Quadratic Bezier Curve: M startX,startY Q controlX,controlY endX,endY
+          const d = `M ${fromLoc.x},${fromLoc.y} ${s.route.curve} ${toLoc.x},${toLoc.y}`;
+          path.setAttribute('d', d);
+          path.setAttribute('class', 'route-line');
+          path.setAttribute('marker-end', 'url(#arrowhead)');
+          
+          // Animate only the current step's route
+          if (i === index) {
+            path.classList.add('draw');
+          } else {
+            path.style.strokeDashoffset = 0; // Already drawn
+            path.style.opacity = 0.4; // Fade old routes
+          }
+          routesLayer.appendChild(path);
+        }
+
+        // Handle the final departure arrow
+        if(s.endArrow && i === index) {
+          const fromLoc = locations[s.endArrow.from];
+          const toLoc = s.endArrow.to;
+          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          const d = `M ${fromLoc.x},${fromLoc.y} ${s.endArrow.curve} ${toLoc.x},${toLoc.y}`;
+          path.setAttribute('d', d);
+          path.setAttribute('class', 'route-line draw');
+          path.setAttribute('marker-end', 'url(#arrowhead)');
+          routesLayer.appendChild(path);
+        }
+      }
+    }
+
+    // Run Initialization on load
+    window.onload = init;
+
+  </script>
+</body>
+</html>

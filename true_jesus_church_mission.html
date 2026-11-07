@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>真耶穌教會的出現與使命 - 互動簡報</title>
+  
+  <!-- 引入 Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- 引入字體與圖標 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* 全局樣式設定 */
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #1c1917; /* 深石灰色背景 */
+      color: #fafaf9;
+      margin: 0;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+    
+    .serif {
+      font-family: 'Noto Serif TC', serif;
+    }
+
+    /* 每一張投影片的容器 */
+    .slide-container {
+      width: 100vw;
+      height: 100vh;
+      min-height: 100vh;
+      box-sizing: border-box;
+      position: relative;
+      overflow: hidden;
+      background-color: #fafaf9; /* 預設米白背景 */
+      color: #292524;
+    }
+
+    /* 標題與裝飾 */
+    .slide-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: #7f1d1d; /* 深紅色系，帶有歷史莊重感 */
+      margin-bottom: 40px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .slide-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background-color: #b45309; /* 琥珀色點綴 */
+      margin: 16px auto 0;
+      border-radius: 2px;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      color: #b45309;
+      text-align: center;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    /* 卡片設計 */
+    .info-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+      border-top: 4px solid #7f1d1d;
+      transition: transform 0.3s ease;
+    }
+    
+    .info-card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* 圖片來源標示區塊 */
+    .slide-attributions {
+        background-color: #111;
+        color: #aaa;
+        padding: 40px;
+    }
+    .attribution-list {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+    .attribution-list__item {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        background: #222;
+        padding: 12px;
+        border-radius: 8px;
+    }
+    .attribution__thumbnail__image {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+    .attribution__link {
+        color: #4da6ff;
+        text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Slide 1: 標題頁 -->
+  <div class="slide-container flex flex-col items-center justify-center text-center" id="slide1" style="background-color: #1c1917; color: white;">
+    <div style="position: absolute; inset: 0; z-index: 0;">
+      <img src="https://media.istockphoto.com/id/183291785/photo/bible.jpg?s=612x612&w=0&k=20&c=bpgJZLC7bz7BtVy_Hsc09izD1m_ruzPPR0MqCsQFbtM=" alt="Vintage open bible" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.3; filter: grayscale(50%) sepia(30%);">
+      <div style="position: absolute; inset: 0; background: linear-gradient(to top, #1c1917 10%, transparent 90%);"></div>
+    </div>
+    
+    <div style="position: relative; z-index: 10; max-width: 800px; padding: 0 20px;">
+      <p class="eyebrow" contenteditable="true" style="color: #fcd34d;">第十課</p>
+      <h1 class="serif" contenteditable="true" style="font-size: 64px; font-weight: 900; margin-bottom: 24px; text-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+        真教會的出現與使命
+      </h1>
+      <div style="background: rgba(0,0,0,0.5); padding: 24px; border-radius: 12px; border-left: 4px solid #fcd34d;">
+        <p contenteditable="true" class="serif" style="font-size: 20px; line-height: 1.6; font-style: italic;">
+          「到那日，我必建立大衛倒塌的帳幕，堵住其中的破口，把那破壞的建立起來，重新修造，像古時一樣。」
+        </p>
+        <p contenteditable="true" style="font-size: 16px; margin-top: 12px; color: #d6d3d1;">—— 摩西九:11 (Amos 9:11)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 2: 大綱 -->
+  <div class="slide-container flex flex-col items-center justify-center" id="slide2">
+    <div style="width: 100%; max-width: 900px; padding: 0 40px;">
+      <p class="eyebrow" contenteditable="true">課程大綱</p>
+      <h2 class="slide-title" contenteditable="true">本課核心內容</h2>
+      
+      <div class="grid grid-cols-2 gap-8 mt-12">
+        <div class="info-card flex items-start gap-4">
+          <div style="background: #fef2f2; color: #7f1d1d; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; flex-shrink: 0;">一</div>
+          <div>
+            <h3 class="serif text-2xl font-bold text-stone-800 mb-2" contenteditable="true">真耶穌教會的出現</h3>
+            <p class="text-stone-600 leading-relaxed" contenteditable="true">從使徒時代到晚雨聖靈復降，應驗舊約聖經預言的歷史脈絡。</p>
+          </div>
+        </div>
+        <div class="info-card flex items-start gap-4">
+          <div style="background: #fef2f2; color: #7f1d1d; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; flex-shrink: 0;">二</div>
+          <div>
+            <h3 class="serif text-2xl font-bold text-stone-800 mb-2" contenteditable="true">真耶穌教會的傳教經過</h3>
+            <p class="text-stone-600 leading-relaxed" contenteditable="true">初期工人的腳蹤，以及福音從中國傳入臺灣及世界各國的奇妙作為。</p>
+          </div>
+        </div>
+        <div class="info-card flex items-start gap-4">
+          <div style="background: #fef2f2; color: #7f1d1d; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; flex-shrink: 0;">三</div>
+          <div>
+            <h3 class="serif text-2xl font-bold text-stone-800 mb-2" contenteditable="true">真耶穌教會的特色</h3>
+            <p class="text-stone-600 leading-relaxed" contenteditable="true">思想直接承自真神與聖經、藉聖靈帶領、自立自傳自養的教會。</p>
+          </div>
+        </div>
+        <div class="info-card flex items-start gap-4">
+          <div style="background: #fef2f2; color: #7f1d1d; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; flex-shrink: 0;">四</div>
+          <div>
+            <h3 class="serif text-2xl font-bold text-stone-800 mb-2" contenteditable="true">真耶穌教會的使命</h3>
+            <p class="text-stone-600 leading-relaxed" contenteditable="true">復興使徒教會、更正錯謬信仰、警告未信世人、完成教會建設。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3: 歷史脈絡 (Timeline) -->
+  <div class="slide-container" id="slide3" style="padding: 64px 80px;">
+    <p class="eyebrow" contenteditable="true">教會歷史脈絡</p>
+    <h2 class="slide-title" contenteditable="true">真教會的出現背景</h2>
+    
+    <div style="display: flex; flex-direction: column; gap: 24px; max-width: 1000px; margin: 0 auto; position: relative;">
+      <!-- 垂直時間軸線 -->
+      <div style="position: absolute; left: 140px; top: 20px; bottom: 20px; width: 4px; background: #e7e5e4; z-index: 0;"></div>
+      
+      <!-- Item 1 -->
+      <div style="display: flex; gap: 40px; position: relative; z-index: 1;">
+        <div style="width: 120px; text-align: right; padding-top: 16px;">
+          <span class="serif" style="font-size: 24px; font-weight: 700; color: #7f1d1d;">第一世紀</span>
+        </div>
+        <div style="width: 24px; height: 24px; background: #7f1d1d; border-radius: 50%; margin-top: 20px; border: 4px solid #fafaf9; transform: translateX(-52px);"></div>
+        <div style="flex: 1; background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); transform: translateX(-40px);">
+          <h3 class="text-xl font-bold text-stone-800 mb-2">使徒時代教會建立</h3>
+          <p class="text-stone-600">五旬節早雨聖靈降臨，建設教會。但第一世紀末葉起，異端侵入，教會被政治利用，更改安息日等誡命，教會俗化變質，聖靈停降。</p>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div style="display: flex; gap: 40px; position: relative; z-index: 1;">
+        <div style="width: 120px; text-align: right; padding-top: 16px;">
+          <span class="serif" style="font-size: 24px; font-weight: 700; color: #b45309;">1517年</span>
+        </div>
+        <div style="width: 24px; height: 24px; background: #b45309; border-radius: 50%; margin-top: 20px; border: 4px solid #fafaf9; transform: translateX(-52px);"></div>
+        <div style="flex: 1; background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); transform: translateX(-40px);">
+          <h3 class="text-xl font-bold text-stone-800 mb-2">宗教改革運動</h3>
+          <p class="text-stone-600">馬丁路德發起教改，恢復「因信稱義」，但仍保留部分遺規。新教各派林立，未完全復原使徒教會之真貌。</p>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div style="display: flex; gap: 40px; position: relative; z-index: 1;">
+        <div style="width: 120px; text-align: right; padding-top: 16px;">
+          <span class="serif" style="font-size: 24px; font-weight: 700; color: #7f1d1d;">1917年</span>
+        </div>
+        <div style="width: 24px; height: 24px; background: #7f1d1d; border-radius: 50%; margin-top: 20px; border: 4px solid #fafaf9; transform: translateX(-52px);"></div>
+        <div style="flex: 1; background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); transform: translateX(-40px);">
+          <h3 class="text-xl font-bold text-stone-800 mb-2">真耶穌教會在中國建立</h3>
+          <p class="text-stone-600">日期滿足，晚雨聖靈復降。神使真耶穌教會在「拿撒勒般」的中國建立起來，負起復興使徒時代真教會的使命。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: 初期重要工人 -->
+  <div class="slide-container" id="slide4" style="padding: 64px 80px; position: relative;">
+    <div style="position: absolute; right: -100px; top: -100px; opacity: 0.05; font-size: 400px; color: #7f1d1d; z-index: 0;">
+      <i class="fa-solid fa-users"></i>
+    </div>
+    
+    <div style="position: relative; z-index: 10; height: 100%; display: flex; flex-direction: column;">
+      <p class="eyebrow" contenteditable="true">神所揀選的器皿</p>
+      <h2 class="slide-title" contenteditable="true">初期重要工人</h2>
+      <p style="text-align: center; color: #57534e; margin-bottom: 40px; font-size: 18px;" contenteditable="true">他們不是創設人，而是神使其完成初期基礎工作的工人 (林前三6、7)</p>
+      
+      <div style="display: flex; gap: 24px; flex-grow: 1; justify-content: center; align-items: stretch;">
+        <!-- 張靈生 -->
+        <div class="info-card flex-1 flex flex-col">
+          <div style="background: #f5f5f4; border-radius: 8px; padding: 12px; text-align: center; margin-bottom: 20px;">
+            <h3 class="serif text-2xl font-bold text-[#7f1d1d]" contenteditable="true">張靈生</h3>
+            <p class="text-sm text-stone-500 font-bold mt-1" contenteditable="true">原名彬 / 山東濰縣</p>
+          </div>
+          <ul class="text-stone-600 space-y-4 flex-grow list-disc pl-5 marker:text-[#b45309]">
+            <li contenteditable="true">1909年受長子溥泉影響，赴上海查經並切求聖靈。</li>
+            <li contenteditable="true">同年12月21日清早受聖靈說靈言。</li>
+            <li contenteditable="true">受啟示遵守安息聖日。</li>
+          </ul>
+        </div>
+
+        <!-- 魏保羅 -->
+        <div class="info-card flex-1 flex flex-col">
+          <div style="background: #f5f5f4; border-radius: 8px; padding: 12px; text-align: center; margin-bottom: 20px;">
+            <h3 class="serif text-2xl font-bold text-[#7f1d1d]" contenteditable="true">魏保羅</h3>
+            <p class="text-sm text-stone-500 font-bold mt-1" contenteditable="true">原名恩波 / 河北容邑</p>
+          </div>
+          <ul class="text-stone-600 space-y-4 flex-grow list-disc pl-5 marker:text-[#b45309]">
+            <li contenteditable="true">業綢緞布商，因大病蒙按手祈禱痊癒而信主。</li>
+            <li contenteditable="true">在北京恩信永布莊樓上聚會時受聖靈。</li>
+            <li contenteditable="true">1917年賣產獻身事主，以「萬國更正教真耶穌教會」開始傳道。</li>
+          </ul>
+        </div>
+
+        <!-- 張巴拿巴 -->
+        <div class="info-card flex-1 flex flex-col">
+          <div style="background: #f5f5f4; border-radius: 8px; padding: 12px; text-align: center; margin-bottom: 20px;">
+            <h3 class="serif text-2xl font-bold text-[#7f1d1d]" contenteditable="true">張巴拿巴</h3>
+            <p class="text-sm text-stone-500 font-bold mt-1" contenteditable="true">原名殿舉 / 山東濰縣</p>
+          </div>
+          <ul class="text-stone-600 space-y-4 flex-grow list-disc pl-5 marker:text-[#b45309]">
+            <li contenteditable="true">聞張靈生傳福音而悔改，1911年受靈洗。</li>
+            <li contenteditable="true">1919年被按立為長老，決心奉獻全生，往各地傳道。</li>
+            <li contenteditable="true">1926年帶領同工將真道傳入臺灣。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5: 拿撒勒與中國的對比 -->
+  <div class="slide-container" id="slide5" style="padding: 64px 80px; display:flex; flex-direction:column; justify-content:center;">
+    <p class="eyebrow" contenteditable="true">屬靈意涵對比</p>
+    <h2 class="slide-title" contenteditable="true">拿撒勒與中國的屬靈對比</h2>
+    <p style="font-size: 18px; color: #57534e; margin-bottom: 32px; text-align: center;" contenteditable="true">「拿但業對他說：拿撒勒還能出甚麼好的嗎？」(約一46) <br> 神揀選了世上軟弱與不起眼的，來成就祂偉大的旨意 (林前一27-28)</p>
+    
+    <div style="display:flex; gap: 40px; flex-grow: 1;">
+      <!-- Left: Jesus -->
+      <div style="flex: 1; background: #fff; padding: 40px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); border-top: 6px solid #b45309;">
+        <h3 class="serif" style="font-size: 28px; font-weight: 700; color: #7f1d1d; border-bottom: 2px solid #f5f5f4; padding-bottom: 16px; margin-bottom: 24px;" contenteditable="true">
+          耶穌與拿撒勒
+        </h3>
+        <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 20px;">
+           <li class="flex items-start gap-3">
+             <i class="fa-solid fa-eye-low-vision text-[#b45309] mt-1"></i>
+             <div>
+               <strong class="block text-[#1c1917] mb-1">被人藐視的邊陲之地</strong>
+               <span class="text-[#57534e] text-sm">第一世紀的拿撒勒是加利利偏鄉，被傳統猶太人認為「沒有先知出過」，缺乏文化與宗教地位。</span>
+             </div>
+           </li>
+           <li class="flex items-start gap-3">
+             <i class="fa-solid fa-crown text-[#b45309] mt-1 opacity-50"></i>
+             <div>
+               <strong class="block text-[#1c1917] mb-1">顛覆傳統期待</strong>
+               <span class="text-[#57534e] text-sm">猶太人期待救世主降生於耶路撒冷或顯赫家族，但耶穌卻成長於木匠家庭，出身毫不起眼。</span>
+             </div>
+           </li>
+        </ul>
+      </div>
+      <!-- Right: Church -->
+      <div style="flex: 1; background: #fff; padding: 40px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); border-top: 6px solid #7f1d1d;">
+         <h3 class="serif" style="font-size: 28px; font-weight: 700; color: #7f1d1d; border-bottom: 2px solid #f5f5f4; padding-bottom: 16px; margin-bottom: 24px;" contenteditable="true">
+          真教會與1917年的中國
+         </h3>
+         <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 20px;">
+           <li class="flex items-start gap-3">
+             <i class="fa-solid fa-globe text-[#7f1d1d] mt-1"></i>
+             <div>
+               <strong class="block text-[#1c1917] mb-1">被西方忽視的宣教地</strong>
+               <span class="text-[#57534e] text-sm">20世紀初的中國積弱不振，在西方基督教界眼中是極需拯救的「落後」之地，無屬靈地位。</span>
+             </div>
+           </li>
+           <li class="flex items-start gap-3">
+             <i class="fa-solid fa-dove text-[#7f1d1d] mt-1"></i>
+             <div>
+               <strong class="block text-[#1c1917] mb-1">彰顯神的主權</strong>
+               <span class="text-[#57534e] text-sm">晚雨聖靈並未降臨在神學根基深厚的歐美國家。真教會的復興不倚靠強權財力，全是聖靈親自帶領的印記。</span>
+             </div>
+           </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6: 中國傳教軌跡統計 -->
+  <div class="slide-container" id="slide6" style="padding: 64px 80px; display:flex; flex-direction:column; position: relative;">
+    <div style="position: absolute; inset: 0; z-index: 0; opacity: 0.1;">
+      <img src="https://www.periodpaper.com/cdn/shop/products/NGM5_346_a855bf46-095a-404c-9709-3b9832bf2811_300x300.jpg?v=1571711114" alt="Historical China" style="width: 100%; height: 100%; object-fit: cover;">
+    </div>
+    
+    <div style="position: relative; z-index: 10; display:flex; flex-direction:column; height: 100%;">
+      <p class="eyebrow" contenteditable="true">傳教軌跡</p>
+      <h2 class="slide-title" contenteditable="true">國內初期教會之成長 (1917-1945)</h2>
+      <p style="text-align: center; color: #57534e; margin-bottom: 40px; font-size: 18px;" contenteditable="true">近卅年間，真道如同野火般傳開，神蹟奇事伴隨</p>
+      
+      <div style="flex-grow:1; display:flex; align-items:center; justify-content:space-around; text-align:center;">
+        <div class="info-card" style="width: 30%;">
+          <p class="serif" contenteditable="true" style="font-size:80px; font-weight:900; color:#7f1d1d; line-height:1;">19</p>
+          <p contenteditable="true" style="font-size:24px; font-weight:700; color:#1c1917; margin-top:16px;">傳入省份</p>
+          <p contenteditable="true" style="font-size:16px; color:#78716c; margin-top:8px;">湖南省最興旺 (230處)<br>福建其次 (125處)</p>
+        </div>
+        <div class="info-card" style="width: 30%;">
+          <p class="serif" contenteditable="true" style="font-size:80px; font-weight:900; color:#7f1d1d; line-height:1;">1,000</p>
+          <p contenteditable="true" style="font-size:24px; font-weight:700; color:#1c1917; margin-top:16px;">教會及祈禱所</p>
+          <p contenteditable="true" style="font-size:16px; color:#78716c; margin-top:8px;">遍佈大江南北<br>建立穩固根基</p>
+        </div>
+        <div class="info-card" style="width: 30%;">
+          <p class="serif" contenteditable="true" style="font-size:80px; font-weight:900; color:#7f1d1d; line-height:1;">80k</p>
+          <p contenteditable="true" style="font-size:24px; font-weight:700; color:#1c1917; margin-top:16px;">信徒人數</p>
+          <p contenteditable="true" style="font-size:16px; color:#78716c; margin-top:8px;">抗戰勝利時之規模<br>見證神的大能</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 7: 臺灣傳教 (互動式地圖嵌入) -->
+  <div class="slide-container" id="slide7" style="padding: 0; background: #f5f5f4; position: relative;">
+    <!-- 將互動式地圖作為 iframe 嵌入，完美整合進簡報中 -->
+    <iframe src="taiwan_mission_map.html" width="100%" height="100%" style="border:none;"></iframe>
+  </div>
+
+  <!-- Slide 8: 傳向世界各國 -->
+  <div class="slide-container" id="slide8" style="position:relative;">
+    <img src="https://media.desenio.com/site_images/68a45f7e3dfe42bc2f82e41e_768547130_7941-8_variant_display_image_ds.jpg?auto=compress,format&fit=max&w=1200" alt="World map abstract" style="width:100%; height:100%; object-fit:cover; opacity: 0.15; position:absolute; top:0; left:0; z-index:0;">
+    
+    <div style="position: relative; z-index: 10; padding: 64px 80px; height: 100%; display: flex; flex-direction: column;">
+      <p class="eyebrow" contenteditable="true">直到地極</p>
+      <h2 class="slide-title" contenteditable="true">福音傳到世界各國</h2>
+      
+      <div class="grid grid-cols-3 gap-6 mt-8">
+        <!-- 亞洲 -->
+        <div class="info-card" style="background: rgba(255,255,255,0.9);">
+          <h3 class="serif text-xl font-bold text-[#7f1d1d] border-b border-stone-200 pb-2 mb-4" contenteditable="true"><i class="fa-solid fa-earth-asia mr-2"></i>亞洲</h3>
+          <ul class="text-sm space-y-2 text-stone-700">
+            <li><strong>日本:</strong> 1927年須田清基歸入本會，戰後回日設教。</li>
+            <li><strong>韓國:</strong> 1944年鄭泰俊等受浸，戰後回韓傳道。</li>
+            <li><strong>東南亞:</strong> 馬新(1925)、沙巴(1927)、印尼(1939)、泰國(1956)、菲律賓(1983)</li>
+            <li><strong>印度:</strong> 1969年由馬來西亞傳入。</li>
+          </ul>
+        </div>
+        <!-- 歐美澳 -->
+        <div class="info-card" style="background: rgba(255,255,255,0.9);">
+          <h3 class="serif text-xl font-bold text-[#7f1d1d] border-b border-stone-200 pb-2 mb-4" contenteditable="true"><i class="fa-solid fa-earth-americas mr-2"></i>歐美與紐澳</h3>
+          <ul class="text-sm space-y-2 text-stone-700">
+            <li><strong>美國:</strong> 1931年檀香山成立教會。</li>
+            <li><strong>加拿大:</strong> 1971年多倫多祈禱所。</li>
+            <li><strong>英國:</strong> 1976年鴨州僑遷信徒成立新堡教會。</li>
+            <li><strong>歐陸:</strong> 留學生傳入德、法。</li>
+            <li><strong>澳洲:</strong> 東南亞移民傳入雪梨、墨爾本。</li>
+          </ul>
+        </div>
+        <!-- 非洲及其他 -->
+        <div class="info-card" style="background: rgba(255,255,255,0.9);">
+          <h3 class="serif text-xl font-bold text-[#7f1d1d] border-b border-stone-200 pb-2 mb-4" contenteditable="true"><i class="fa-solid fa-earth-africa mr-2"></i>非洲及中南美</h3>
+          <ul class="text-sm space-y-2 text-stone-700">
+            <li><strong>奈及利亞:</strong> 1978年傳入，神蹟奇事顯明。</li>
+            <li><strong>賴比瑞亞:</strong> 1985年設立教會。</li>
+            <li><strong>迦納:</strong> 1985年藉迦納人安地傳入。</li>
+            <li><strong>其他:</strong> 巴西、阿根廷亦有祈禱所。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 9: 真教會的特色 -->
+  <div class="slide-container" id="slide9" style="padding: 64px 80px; display:flex; flex-direction:column; justify-content:center;">
+    <p class="eyebrow" contenteditable="true">與一般教派之差異</p>
+    <h2 class="slide-title" contenteditable="true">真耶穌教會的三大特色</h2>
+    
+    <div class="flex flex-col gap-6 max-w-4xl mx-auto w-full">
+      <div class="info-card flex items-center gap-6" style="border-top: none; border-left: 6px solid #7f1d1d;">
+        <i class="fa-solid fa-book-bible text-4xl text-[#b45309] w-12 text-center"></i>
+        <div>
+          <h3 class="serif text-xl font-bold text-stone-800 mb-1" contenteditable="true">1. 思想直接承自真神與聖經</h3>
+          <p class="text-stone-600 text-sm" contenteditable="true">初期工人雖出自其他教派，但蒙神啟示重要教規。雖當時不知其所以然，日後查經確知皆明記於聖經，大相逕庭於承襲創始者思想的傳統教派。</p>
+        </div>
+      </div>
+      
+      <div class="info-card flex items-center gap-6" style="border-top: none; border-left: 6px solid #7f1d1d;">
+        <i class="fa-solid fa-dove text-4xl text-[#b45309] w-12 text-center"></i>
+        <div>
+          <h3 class="serif text-xl font-bold text-stone-800 mb-1" contenteditable="true">2. 真理乃藉聖靈之帶領與啟示</h3>
+          <p class="text-stone-600 text-sm" contenteditable="true">採「以經解經、以經證經」方式。初期傳道者雖缺原文知識，但因有真理的聖靈帶領 (約十六12-13)，解釋與原文聖經十分吻合，奇妙至極。</p>
+        </div>
+      </div>
+      
+      <div class="info-card flex items-center gap-6" style="border-top: none; border-left: 6px solid #7f1d1d;">
+        <i class="fa-solid fa-seedling text-4xl text-[#b45309] w-12 text-center"></i>
+        <div>
+          <h3 class="serif text-xl font-bold text-stone-800 mb-1" contenteditable="true">3. 自立、自傳、自養之教會</h3>
+          <p class="text-stone-600 text-sm" contenteditable="true">一切仰賴真理的聖靈幫助 (亞四6)。不仰賴外人或外國差會襄助，經費由信徒甘心樂意奉獻，神蹟奇事顯明，蒙恩日增。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 10: 真教會的使命 -->
+  <div class="slide-container" id="slide10" style="padding: 64px 80px;">
+    <p class="eyebrow" contenteditable="true">肩負的重任</p>
+    <h2 class="slide-title" contenteditable="true">真耶穌教會的四大使命</h2>
+    
+    <div class="grid grid-cols-2 gap-8 h-full pb-20">
+      <div class="info-card relative overflow-hidden group">
+        <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl group-hover:scale-110 transition-transform"><i class="fa-solid fa-hammer"></i></div>
+        <h3 class="serif text-2xl font-bold text-[#7f1d1d] mb-3" contenteditable="true">1. 復興使徒教會</h3>
+        <p class="text-stone-600 text-sm leading-relaxed" contenteditable="true">
+          重建「大衛倒塌的帳幕」(摩九11)。如所羅巴伯在「原有根基」建殿，晚雨聖靈建設的教會必須像使徒時代一樣，有真理、聖靈、神蹟明證。
+        </p>
+      </div>
+      
+      <div class="info-card relative overflow-hidden group">
+        <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl group-hover:scale-110 transition-transform"><i class="fa-solid fa-scale-balanced"></i></div>
+        <h3 class="serif text-2xl font-bold text-[#7f1d1d] mb-3" contenteditable="true">2. 更正錯謬信仰</h3>
+        <p class="text-stone-600 text-sm leading-relaxed" contenteditable="true">
+          「為從前一次交付聖徒的真道竭力爭辯」(猶3)。更正一般教會對洗禮(赦罪功效)、洗腳禮(關乎得救)、聖餐(靈化說)、聖靈(說方言明證)及安息日等錯謬。
+        </p>
+      </div>
+      
+      <div class="info-card relative overflow-hidden group">
+        <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl group-hover:scale-110 transition-transform"><i class="fa-solid fa-bullhorn"></i></div>
+        <h3 class="serif text-2xl font-bold text-[#7f1d1d] mb-3" contenteditable="true">3. 警告未信世人</h3>
+        <p class="text-stone-600 text-sm leading-relaxed" contenteditable="true">
+          末日臨近，如古時天使警告子民離開巴比倫罪城。真教會負有向罪惡世界傳警告之使命，呼籲世人悔改，免受災殃 (啟十八1-5)。
+        </p>
+      </div>
+      
+      <div class="info-card relative overflow-hidden group">
+        <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl group-hover:scale-110 transition-transform"><i class="fa-solid fa-church"></i></div>
+        <h3 class="serif text-2xl font-bold text-[#7f1d1d] mb-3" contenteditable="true">4. 完成教會建設</h3>
+        <p class="text-stone-600 text-sm leading-relaxed" contenteditable="true">
+          建造末世方舟。教會必須在各方面追求完全，如新婦裝飾整齊，在主裡完全合一成聖，預備迎接基督的再臨 (啟十九7)。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 11: 結語 -->
+  <div class="slide-container flex flex-col items-center justify-center text-center" id="slide11" style="background-color: #7f1d1d; color: white;">
+    <div style="max-width: 800px; padding: 0 40px;">
+      <i class="fa-solid fa-lightbulb text-6xl text-[#fcd34d] mb-8"></i>
+      <h2 class="serif text-5xl font-bold mb-8" contenteditable="true">裝備自己，完成使命</h2>
+      <p class="text-xl leading-relaxed text-[#fca5a5] mb-8" contenteditable="true">
+        在世界末日前夕，凡真信徒理當：<br>
+        <strong class="text-white">勤讀聖經以充實靈知</strong><br>
+        <strong class="text-white">恆切禱告祈求聖靈充滿以加添靈力</strong>
+      </p>
+      <p class="text-lg text-white" contenteditable="true">
+        培養靈德，成為世上的光與鹽，廣傳福音於天下，等候主耶穌再臨！
+      </p>
+    </div>
+  </div>
+
+  <!-- Attributions Slide -->
+  <div class="slide-container slide-attributions flex flex-col" id="slide-attributions-1">
+    <div class="attribution-safe-zone flex-grow max-w-4xl mx-auto w-full pt-16">
+      <h2 class="slide-title" style="color: #fcd34d;">圖片來源聲明 (Image Sources)</h2>
+      <div class="content-area mt-8">
+        <ul class="attribution-list">
+          <li class="attribution-list__item">
+            <div class="attribution__thumbnail"><img class="attribution__thumbnail__image" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcT_w8kNHBMShEG0TT4P0akThKoNOO6QS3_xwJI2srt6JVHUDfD0i8zV_qluxmDF" alt="Thumbnail"></div>
+            <div class="attribution__details">
+              <p class="attribution__raw-url text-xs truncate w-96">https://media.istockphoto.com/id/183291785/photo/bible.jpg</p>
+              <p class="attribution__title">Source: <a href="https://www.istockphoto.com/photos/light-illuminating-an-open-bible" target="_blank" class="attribution__link">www.istockphoto.com</a></p>
+            </div>
+          </li>
+          <li class="attribution-list__item">
+            <div class="attribution__thumbnail"><img class="attribution__thumbnail__image" src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRBxe5pfJ2HnY0SKOBbfBcPDkvNcOfNfuVt-zqjm1UA4Fm-S0ZxZ3L3buNk94jk" alt="Thumbnail"></div>
+            <div class="attribution__details">
+              <p class="attribution__raw-url text-xs truncate w-96">https://www.periodpaper.com/cdn/shop/products/NGM5_346_...jpg</p>
+              <p class="attribution__title">Source: <a href="https://www.periodpaper.com/products/1920-color-print-yen-chau-widows-monument-china-statue-historical-image-ngm5-182904-ngm5-346" target="_blank" class="attribution__link">www.periodpaper.com</a></p>
+            </div>
+          </li>
+          <li class="attribution-list__item">
+            <div class="attribution__thumbnail"><img class="attribution__thumbnail__image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRETbZXtqa1DH_9_8Q08Szw6EWO_DXcXBJeYwdQx8susb0Y6fajRX4GbjD6UTFm" alt="Thumbnail"></div>
+            <div class="attribution__details">
+              <p class="attribution__raw-url text-xs truncate w-96">https://media.desenio.com/site_images/...jpg</p>
+              <p class="attribution__title">Source: <a href="https://desenio.co.uk/p/posters-prints/maps-and-cities/world-maps/world-map-print-gold/" target="_blank" class="attribution__link">desenio.co.uk</a></p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PPT 控制面板與導航腳本 -->
+  <div id="ppt-controls" style="position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.6); color: white; padding: 10px 20px; border-radius: 30px; font-size: 14px; z-index: 9999; display: flex; gap: 16px; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+    <span><i class="fa-solid fa-keyboard" style="margin-right: 8px;"></i>使用上下方向鍵切換</span>
+    <div style="display: flex; gap: 8px;">
+      <button onclick="prevSlide()" style="background: white; color: #1c1917; border: none; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-chevron-up"></i></button>
+      <button onclick="nextSlide()" style="background: white; color: #1c1917; border: none; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-chevron-down"></i></button>
+    </div>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide-container');
+    let currentSlide = 0;
+
+    function scrollToSlide(index) {
+      if (index >= 0 && index < slides.length) {
+        currentSlide = index;
+        slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function nextSlide() { scrollToSlide(currentSlide + 1); }
+    function prevSlide() { scrollToSlide(currentSlide - 1); }
+
+    // 監聽鍵盤事件
+    window.addEventListener('keydown', (e) => {
+      // 避免在可編輯區域(contenteditable)打字時觸發翻頁
+      if (e.target.isContentEditable) return; 
+
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      }
+    });
+
+    // 確保重新整理時定位在頂部
+    window.onload = () => {
+      window.scrollTo(0, 0);
+    };
+  </script>
+</body>
+</html>
